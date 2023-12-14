@@ -57,29 +57,32 @@ function updateVisualization() {
     visualizationDiv.style.width = `${totalWidth}px`;
 }
 
-// Color picker event listener
-document.getElementById('colorPicker').addEventListener('change', function() {
-    const selectedColor = this.value;
-    
-    // Update the background color of the selected color circle
-    const colorCircle = document.getElementById('selectedColorCircle');
-    colorCircle.style.backgroundColor = selectedColor;
-    colorCircle.style.width = '30px'; // Adjust the size of the circle as needed
-    colorCircle.style.height = '30px';
-});
+document.addEventListener("DOMContentLoaded", function () {
+    const colors = ['#8B0000', '#704214', '#4F6B7F', '#6F4E87', '#2F4F4F', '#E6E6FA', '#87CEEB', '#FFD700', '#FFA07A', '#FF91A4'];
 
-// Save color button event listener
-document.getElementById('saveColorButton').addEventListener('click', function() {
-    const selectedColor = document.getElementById('colorPicker').value;
+    // Create color picker div
+    const colorPicker = document.createElement("div");
+    colorPicker.classList.add("color-picker");
     
-    // Save the color to local storage
-    localStorage.setItem('savedColor', selectedColor);
-    alert('Color saved!');
-});
+    // Append color boxes to the color picker
+    colors.forEach(color => {
+        const colorBox = document.createElement("div");
+        colorBox.classList.add("color-box");
+        colorBox.style.backgroundColor = color;
 
-// Initialize the color circle with the default color
-const defaultColor = document.getElementById('colorPicker').value;
-const colorCircle = document.getElementById('selectedColorCircle');
-colorCircle.style.backgroundColor = defaultColor;
-colorCircle.style.width = '30px'; // Adjust the size of the circle as needed
-colorCircle.style.height = '30px';
+        colorBox.addEventListener("click", function () {
+            // Remove border from all color boxes
+            colorPicker.querySelectorAll(".color-box").forEach(box => {
+                box.classList.remove("selected-color");
+            });
+
+            // Add border to the selected color box
+            colorBox.classList.add("selected-color");
+        });
+
+        colorPicker.appendChild(colorBox);
+    });
+
+    // Append the color picker to the body
+    document.body.appendChild(colorPicker);
+});
