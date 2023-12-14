@@ -1,8 +1,11 @@
 # poetry-visualisation
 
+## Done
+- transform words to blocks
+- add colour picker
+- add punctuation recognition
+
 ## To fix:
-- empty lines creates a block in visualisation
-- space at the end of a line creates a block in visualisation
 - part of speach recognition doesn't work
 
 ## To add:
