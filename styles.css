@@ -53,6 +53,12 @@
     border: 1.5px solid black; /* You can customize the border style here */
 }
   
+.punctuation {
+    display: inline-block;
+    margin: 2px;
+    padding: 5px;
+    background-color: #ffffff; /* Customize the background color for punctuation marks */
+}
 
 .noun { background-color: #aaffaa; } /* Green for Nouns */
 .verb { background-color: #ffaaaa; } /* Red for Verbs */

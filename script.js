@@ -21,6 +21,11 @@ function getPartOfSpeech(word) {
     }
 }
 
+
+function isPunctuation(char) {
+    return /[.,;:'"!?()—]/.test(char);
+}
+
 function updateVisualization() {
     const poemInput = document.getElementById('poemInput').value;
     const lines = poemInput.split('\n');
@@ -33,17 +38,51 @@ function updateVisualization() {
     lines.forEach(line => {
         const lineContainer = document.createElement('div');
 
-        const words = line.split(/\s+/);
+        let word = '';
+        let punctuation = '';
 
-        words.forEach(word => {
-            const wordBlock = document.createElement('div');
-            const partOfSpeech = getPartOfSpeech(word);
-            wordBlock.className = `wordBlock ${partOfSpeech}`; 
-            wordBlock.style.width = `${word.length * 10}px`; // Adjust the multiplier based on your preference
-            lineContainer.appendChild(wordBlock);
+        for (let i = 0; i <= line.length; i++) {
+            const char = line[i];
 
-            totalWidth += word.length * 10; // Accumulate the width for each word
-        });
+            if (isPunctuation(char) || char === ' ' || i === line.length) {
+                // Handle punctuation marks
+                if (punctuation) {
+                    const punctuationBlock = document.createElement('div');
+                    punctuationBlock.textContent = punctuation;
+                    punctuationBlock.className = 'punctuation';
+                    lineContainer.appendChild(punctuationBlock);
+
+                    // Calculate width for punctuation marks
+                    totalWidth += punctuation.length * 10;
+
+                    // Reset punctuation for the next iteration
+                    punctuation = '';
+                }
+
+                // Handle words
+                if (word) {
+                    const wordBlock = document.createElement('div');
+                    const partOfSpeech = getPartOfSpeech(word);
+                    wordBlock.className = `wordBlock ${partOfSpeech}`; 
+                    wordBlock.style.width = `${word.length * 5}px`; // Adjust the multiplier based on your preference
+                    lineContainer.appendChild(wordBlock);
+
+                    // Calculate width for words
+                    totalWidth += word.length * 10;
+
+                    // Reset the word for the next iteration
+                    word = '';
+                }
+            } else {
+                // Build the word until a space or punctuation mark is encountered
+                word += char;
+            }
+
+            // Accumulate punctuation until a non-punctuation character or the end of the line
+            if (isPunctuation(char)) {
+                punctuation += char;
+            }
+        }
 
         // Add a line break after each line container
         const lineBreak = document.createElement('br');
@@ -56,6 +95,7 @@ function updateVisualization() {
     // Set the width of the visualizationDiv based on the total width
     visualizationDiv.style.width = `${totalWidth}px`;
 }
+
 
 document.addEventListener("DOMContentLoaded", function () {
     const colors = ['#8B0000', '#704214', '#4F6B7F', '#6F4E87', '#2F4F4F', '#E6E6FA', '#87CEEB', '#FFD700', '#FFA07A', '#FF91A4'];
@@ -86,3 +126,5 @@ document.addEventListener("DOMContentLoaded", function () {
     // Append the color picker to the body
     document.body.appendChild(colorPicker);
 });
+
+document.getElementById('poemInput').addEventListener('input', updateVisualization);
