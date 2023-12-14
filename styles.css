@@ -1,0 +1,42 @@
+/* styles.css */
+
+.container {
+    display: flex;
+}
+
+#poemInput {
+    flex: 1;
+    margin: 10px;
+    padding: 5px;
+    resize: vertical;
+}
+
+#visualization {
+    flex: 1;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+#colorPickerContainer {
+    margin-top: 10px; /* Add some top margin for spacing */
+}
+
+.wordBlock {
+    display: inline-block;
+    margin: 2px;
+    padding: 5px;
+}
+
+.colorSwatch {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin-left: 5px;
+    vertical-align: middle;
+}
+
+.noun { background-color: #aaffaa; } /* Green for Nouns */
+.verb { background-color: #ffaaaa; } /* Red for Verbs */
+.adjective { background-color: #aaaaff; } /* Blue for Adjectives */
+.other { background-color: #cccccc; } /* Gray for other parts of speech */
